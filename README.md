@@ -27,7 +27,7 @@
 
       sudo mkdir -p /mnt/common_volume/grafana/{grafana-config,grafana-data,prometheus-data,loki-data,promtail-data} #(Создание нескольких директорий для хранения данных конфигурации и информации для Grafana, Prometheus, Loki, Promtail.)
 
-      sudo chown -R (id−u) : (id -g) {/mnt/common_volume/swarm/grafana/config,/mnt/common_volume/grafana} #(Изменение владельца этих директорий на текущего пользователя с помощью команд id -u и id -g, которые возвращают UID и GID текущего пользователя.)
+      sudo chown -R (id −u):$(id -g) {/mnt/common_volume/swarm/grafana/config,/mnt/common_volume/grafana} #(Изменение владельца этих директорий на текущего пользователя с помощью команд id -u и id -g, которые возвращают UID и GID текущего пользователя.)
 
       touch /mnt/common_volume/grafana/grafana-config/grafana.ini #(Создание пустого файла grafana.ini для дальнейшей конфигурации Grafana.)
 
