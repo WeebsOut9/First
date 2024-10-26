@@ -51,7 +51,7 @@
 
       yum install docker-ce docker-ce-cli containerd.io #(Установка Docker Engine (docker-ce), клиентских инструментов Docker (docker-ce-cli) и контейнерного рантайма containerd.)
 
-      systemctl enable docker --now #(ключение и немедленный запуск службы Docker.)
+      systemctl enable docker --now #(Ключение и немедленный запуск службы Docker.)
 
       docker compose up -d #(Запуск сервисов, описанных в docker-compose.yaml, в фоновом режиме.)
 
