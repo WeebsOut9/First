@@ -27,7 +27,7 @@
 
       sudo mkdir -p /mnt/common_volume/grafana/{grafana-config,grafana-data,prometheus-data,loki-data,promtail-data} #(Создание нескольких директорий для хранения данных конфигурации и информации для Grafana, Prometheus, Loki, Promtail.)
 
-      sudo chown -R ( i d − u ) : (id -g) {/mnt/common_volume/swarm/grafana/config,/mnt/common_volume/grafana} #(Изменение владельца этих директорий на текущего пользователя с помощью команд id -u и id -g, которые возвращают UID и GID текущего пользователя.)
+      sudo chown -R (id−u) : (id -g) {/mnt/common_volume/swarm/grafana/config,/mnt/common_volume/grafana} #(Изменение владельца этих директорий на текущего пользователя с помощью команд id -u и id -g, которые возвращают UID и GID текущего пользователя.)
 
       touch /mnt/common_volume/grafana/grafana-config/grafana.ini #(Создание пустого файла grafana.ini для дальнейшей конфигурации Grafana.)
 
@@ -41,9 +41,9 @@
 
       curl -L "https://github.com/docker/compose/releases/download/$COMVER/docker-compose-$(uname -s)-$(uname -m)" -o /usr/bin/docker-compose #(Загрузка последней версии Docker Compose с официального репозитория GitHub и сохранение её в /usr/bin/docker-compose.)
 
-      chmod +x /usr/bin/docker-compose SUDO #(Предоставление прав на выполнение файла docker-compose.)
+      sudo chmod +x /usr/bin/docker-compose #(Предоставление прав на выполнение файла docker-compose.)
 
-      docker-compose --version SUDO #(Проверка установленной версии Docker Compose.)
+      docker-compose --version #(Проверка установленной версии Docker Compose.)
 
       yum install wget #(Установка wget для скачивания файлов.)
 
