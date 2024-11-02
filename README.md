@@ -52,7 +52,7 @@
 
       sudo yum install docker-ce docker-ce-cli containerd.io #(Установка Docker Engine (docker-ce), клиентских инструментов Docker (docker-ce-cli) и контейнерного рантайма containerd.)
 
-      sudo systemctl enable docker --now #(Ключение и немедленный запуск службы Docker.)
+      sudo systemctl enable docker --now #(Включение и немедленный запуск службы Docker.)
 
       sudo yum install curl #(Установка утилиты curl (на CentOS/RHEL) для выполнения HTTP-запросов.)
 
