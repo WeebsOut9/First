@@ -23,6 +23,13 @@
       sudo yum install wget #(Установка wget для скачивания файлов.)
 
 
+  в случае возникновения такой ошибки:
+  
+  ![1](https://github.com/user-attachments/assets/fe17df20-0281-49c7-a890-8d0067462568)
+  
+  решение:
+
+
 
       sudo wget -P /etc/yum.repos.d/ https://download.docker.com/linux/centos/docker-ce.repo #(Скачивание файла репозитория Docker CE для CentOS и размещение его в директории /etc/yum.repos.d/.)
 
