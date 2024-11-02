@@ -29,7 +29,24 @@
   
   решение:
 
+            Пишем:
+  
+                   su root 
+                   nano /etc/sudoers
 
+
+              В появившемся окне под 
+ 
+                   root ALL=(ALL)  ALL 
+ 
+              Пишем 
+ 
+                   user_name ALL=(ALL)  ALL
+  
+              Затем жмем Ctrl+X, подтверждаем на Y+Enter.
+                   
+Продолжаем:
+                   
 
       sudo wget -P /etc/yum.repos.d/ https://download.docker.com/linux/centos/docker-ce.repo #(Скачивание файла репозитория Docker CE для CentOS и размещение его в директории /etc/yum.repos.d/.)
 
@@ -37,7 +54,7 @@
 
       sudo systemctl enable docker --now #(Ключение и немедленный запуск службы Docker.)
 
-      sudo yum install cur #(Установка утилиты curl (на CentOS/RHEL) для выполнения HTTP-запросов.)
+      sudo yum install curl #(Установка утилиты curl (на CentOS/RHEL) для выполнения HTTP-запросов.)
 
       COMVER=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep 'tag_name' | cut -d" -f4) #(Использование команды curl для получения последней версии Docker Compose с GitHub API. Фильтрация ответа для извлечения тега с версией.)
 
