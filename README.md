@@ -17,8 +17,31 @@
 
 Клонирование репозитория с настройками. Создание необходимых директорий для хранения данных и конфигураций. Настройку прав доступа для правильной работы сервисов. Установку последней версии Docker Compose и запуск контейнеров.
 
-* Переходим к выполнению команд(после # в () находится описание):
+* Переходим к выполнению стартовых команд(после # в () находится описание):
 
+      
+      sudo yum install wget #(Установка wget для скачивания файлов.)
+
+
+
+      sudo wget -P /etc/yum.repos.d/ https://download.docker.com/linux/centos/docker-ce.repo #(Скачивание файла репозитория Docker CE для CentOS и размещение его в директории /etc/yum.repos.d/.)
+
+      sudo yum install docker-ce docker-ce-cli containerd.io #(Установка Docker Engine (docker-ce), клиентских инструментов Docker (docker-ce-cli) и контейнерного рантайма containerd.)
+
+      sudo systemctl enable docker --now #(Ключение и немедленный запуск службы Docker.)
+
+      sudo yum install cur #(Установка утилиты curl (на CentOS/RHEL) для выполнения HTTP-запросов.)
+
+      COMVER=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep 'tag_name' | cut -d" -f4) #(Использование команды curl для получения последней версии Docker Compose с GitHub API. Фильтрация ответа для извлечения тега с версией.)
+
+      sudo curl -L "https://github.com/docker/compose/releases/download/$COMVER/docker-compose-$(uname -s)-$(uname -m)" -o /usr/bin/docker-compose #(Загрузка последней версии Docker Compose с официального репозитория GitHub и сохранение её в /usr/bin/docker-compose.)
+
+      sudo chmod +x /usr/bin/docker-compose #(Предоставление прав на выполнение файла docker-compose.)
+
+      docker-compose --version #(Проверка установленной версии Docker Compose.)
+
+* Настройка Copypast:
+  
       git clone https://github.com/skl256/grafana_stack_for_docker.git #(Клонирование репозитория Grafana Stack для Docker с GitHub.)
 
       cd grafana_stack_for_docker #(Переход в каталог, куда был склонирован репозиторий.)
@@ -34,26 +57,9 @@
       cp config/* /mnt/common_volume/swarm/grafana/config/ #(Копирование всех файлов из локальной директории config в созданный каталог конфигурации.)
 
       mv grafana.yaml docker-compose.yaml #(Переименование файла grafana.yaml в docker-compose.yaml, который используется для запуска контейнеров Docker через Docker Compose.)
+  
+      sudo docker compose up -d #(Запуск сервисов, описанных в docker-compose.yaml, в фоновом режиме.)
 
-      yum install cur #(Установка утилиты curl (на CentOS/RHEL) для выполнения HTTP-запросов.)
-
-      COMVER=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep 'tag_name' | cut -d" -f4) #(Использование команды curl для получения последней версии Docker Compose с GitHub API. Фильтрация ответа для извлечения тега с версией.)
-
-      curl -L "https://github.com/docker/compose/releases/download/$COMVER/docker-compose-$(uname -s)-$(uname -m)" -o /usr/bin/docker-compose #(Загрузка последней версии Docker Compose с официального репозитория GitHub и сохранение её в /usr/bin/docker-compose.)
-
-      sudo chmod +x /usr/bin/docker-compose #(Предоставление прав на выполнение файла docker-compose.)
-
-      docker-compose --version #(Проверка установленной версии Docker Compose.)
-
-      yum install wget #(Установка wget для скачивания файлов.)
-
-      wget -P /etc/yum.repos.d/ https://download.docker.com/linux/centos/docker-ce.repo #(Скачивание файла репозитория Docker CE для CentOS и размещение его в директории /etc/yum.repos.d/.)
-
-      yum install docker-ce docker-ce-cli containerd.io #(Установка Docker Engine (docker-ce), клиентских инструментов Docker (docker-ce-cli) и контейнерного рантайма containerd.)
-
-      systemctl enable docker --now #(Ключение и немедленный запуск службы Docker.)
-
-      docker compose up -d #(Запуск сервисов, описанных в docker-compose.yaml, в фоновом режиме.)
 
 * Самое важное, по пути: /mnt/common_volume/swarm/grafana/config в файле prometheus.ini через vi нужно добавить вот эти строки, так это нужно будет для дальнейшей работы:
 
