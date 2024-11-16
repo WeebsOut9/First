@@ -199,7 +199,47 @@ Prometheus и Grafana часто используются вместе для м
       В поле URL укажите адрес, по которому работает Prometheus (например: http://localhost:9090). 
       Нажмите кнопку "Save & Test" (Сохранить и протестировать), чтобы проверить подключение.
 
-      
+
+Захом в connection там где мы писали http://prometheus:9090 пишем http://victoriametrics:8428 И заменяем имя из "Prometheus-2" в "Vika" нажимаем на dashboards add visualition выбираем "Vika" снизу меняем на "code" Переходим в терминал и пишем
+
+           echo -e "# TYPE OILCOINT_metric1 gauge\nOILCOINT_metric1 0" | curl --data-binary @- http://localhost:8428/api/v1/import/prometheus
+
+Заменяем нолиек на любые другие цифры  
+
+• Команда отправляет бинарные данные (например, метрики в формате Prometheus) на локальный сервер, который слушает на порту 8428.
+
+           curl -G 'http://localhost:8428/api/v1/query' --data-urlencode 'query=OILCOINT_metric1'
+
+И так делаем 3 раза 
+
+Тепреь вписываеи в строку 
+
+            http://localhost:8428
+
+Нажимаем на 
+            vmui - Web UI
+
+Копируем переменную OILCOINT_metric1 и вставляем в query
+
+Нажимаем run
+
+![image](https://github.com/user-attachments/assets/a4c698bc-0717-4458-872f-67c0ec99adfe)
+
+![image](https://github.com/user-attachments/assets/fdf929a3-5ece-4b28-84ff-9aa3272dda65)
+
+![image](https://github.com/user-attachments/assets/9e307642-edbe-4081-87f5-cd45b31fdf6b)
+
+![image](https://github.com/user-attachments/assets/5bb5be52-f3b8-4542-aeb6-148b9e321f71)
+
+Копируем переменную OILCOINT_metric1 и вставляем в code
+
+![image](https://github.com/user-attachments/assets/b0170b3a-229e-4c21-83c5-8b134723b342)
+
+![image](https://github.com/user-attachments/assets/23b40bc7-a10c-40a4-975a-c508ea060146)
+
+![image](https://github.com/user-attachments/assets/b6fcc295-2296-43f9-9faa-517c83f537da)
+
+![image](https://github.com/user-attachments/assets/ab43437b-b229-4944-b7af-1fe4e5716ae8)
 
 
 
