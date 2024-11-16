@@ -240,14 +240,3 @@ Prometheus и Grafana часто используются вместе для м
 ![image](https://github.com/user-attachments/assets/b6fcc295-2296-43f9-9faa-517c83f537da)
 
 ![image](https://github.com/user-attachments/assets/ab43437b-b229-4944-b7af-1fe4e5716ae8)
-
-
-
-
-
-
-
-
-Переход в каталог, куда был склонирован репозиторий.
-
-            sodo cd grafana_stack_for_docker
