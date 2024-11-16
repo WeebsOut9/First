@@ -251,38 +251,3 @@ Prometheus и Grafana часто используются вместе для м
 Переход в каталог, куда был склонирован репозиторий.
 
             sodo cd grafana_stack_for_docker
-
-
-
-            
-
-
-            
-
-  
-
-
-
-
-Самое важное, по пути: /mnt/common_volume/swarm/grafana/config в файле prometheus.ini через vi нужно добавить вот эти строки, так это нужно будет для дальнейшей работы:
-
-      node-exporter: 
-      image: prom/node-exporter 
-      volumes: 
-        - /proc:/host/proc:ro 
-        - /sys:/host/sys:ro 
-        - /:/rootfs:ro 
-      container_name: exporter 
-      hostname: exporter 
-      command: 
-        - --path.procfs=/host/proc 
-        - --path.sysfs=/host/sys 
-        - --collector.filesystem.ignored-mount-points 
-        - ^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/) 
-      ports: 
-        - 9100:9100 
-      restart: unless-stopped 
-      environment: 
-        TZ: "Europe/Moscow" 
-      networks: 
-        - default
