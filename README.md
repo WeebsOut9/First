@@ -7,42 +7,10 @@
       Не создавать в сетевых расположения (виртуалка не будет работать).
       При установки нужно выбрать английский язык.
 
-Клонирование репозитория Grafana Stack для Docker с GitHub.
-      
-            git clone https://github.com/skl256/grafana_stack_for_docker.git
-
-Переход в каталог, куда был склонирован репозиторий.
-
-            cd grafana_stack_for_docker
-
-Создание каталога для конфигурации Grafana внутри общей директории в Docker Swarm.
-
-            sudo mkdir -p /mnt/common_volume/swarm/grafana/config
-
-Создание нескольких директорий для хранения данных конфигурации и информации для Grafana, Prometheus, Loki, Promtail.
-
-            sudo mkdir -p /mnt/common_volume/grafana/{grafana-config,grafana-data,prometheus-data,loki-data,promtail-data}
-
-Изменение владельца этих директорий на текущего пользователя с помощью команд id -u и id -g, которые возвращают UID и GID текущего пользователя.
-
-            sudo chown -R (id −u):$(id -g) {/mnt/common_volume/swarm/grafana/config,/mnt/common_volume/grafana}
-
-Создание пустого файла grafana.ini для дальнейшей конфигурации Grafana.
-
-            touch /mnt/common_volume/grafana/grafana-config/grafana.ini
-
-Копирование всех файлов из локальной директории config в созданный каталог конфигурации.
-
-            cp config/* /mnt/common_volume/swarm/grafana/config/
-
-Переименование файла grafana.yaml в docker-compose.yaml, который используется для запуска контейнеров Docker через Docker Compose.
-
-            mv grafana.yaml docker-compose.yaml
-
 Установка wget для скачивания файлов.
 
             sudo yum install wget
-            
+  
 В случае возникновения такой ошибки:
   
   ![1](https://github.com/user-attachments/assets/fe17df20-0281-49c7-a890-8d0067462568)
@@ -62,11 +30,15 @@
                    user_name ALL=(ALL)  ALL
   
               Затем жмем Ctrl+X, подтверждаем на Y+Enter.
-  
+              
 Скачивание файла репозитория Docker CE для CentOS и размещение его в директории /etc/yum.repos.d/. (везде жмем Y)
 
             sudo wget -P /etc/yum.repos.d/ https://download.docker.com/linux/centos/docker-ce.repo
 
+Устанавливаем docker
+
+             sudo yum install docker-ce docker-ce-cli containerd.io
+            
 Включение и немедленный запуск службы Docker.
             
             sudo systemctl enable docker --now
@@ -91,6 +63,135 @@
 
             docker-compose --version
 
+Установка git
+
+             sudo yum install git
+
+Клонирование репозитория Grafana Stack для Docker с GitHub.
+      
+            sodo git clone https://github.com/skl256/grafana_stack_for_docker.git
+
+Затем, удоляем файл выброном пути
+
+            sudo rm -r grafana_stack_for_docker/grafana.yaml
+            
+Перетаскиваем готовый файл в нужную папку
+
+            sudo mv Downloads/docker-compose grafana_stack_for_docker
+
+Для проверки пишем
+
+            ls
+            
+![1](https://github.com/user-attachments/assets/2f7ba9bb-e496-484b-8ec2-d5821b4d5d17)
+
+Переминовываем файл
+
+            sudo mv docker-compose docker-compose.yaml
+
+И снова проверяем 
+
+            ls
+
+![2](https://github.com/user-attachments/assets/56dad9c4-f0ee-4963-840a-b69755790896)
+
+Создание каталога для конфигурации Grafana внутри общей директории в Docker Swarm.
+
+            sudo mkdir -p /mnt/common_volume/swarm/grafana/config
+
+Создание нескольких директорий для хранения данных конфигурации и информации для Grafana, Prometheus, Loki, Promtail.
+
+            sudo mkdir -p /mnt/common_volume/grafana/{grafana-config,grafana-data,prometheus-data,loki-data,promtail-data}
+
+Изменение владельца этих директорий на текущего пользователя с помощью команд id -u и id -g, которые возвращают UID и GID текущего пользователя.
+
+            sudo chown -R (id −u):$(id -g) {/mnt/common_volume/swarm/grafana/config,/mnt/common_volume/grafana}
+
+Создание пустого файла grafana.ini для дальнейшей конфигурации Grafana.
+
+            sodo touch /mnt/common_volume/grafana/grafana-config/grafana.ini
+            
+Копирование всех файлов из локальной директории config в созданный каталог конфигурации.
+
+            sodo cp config/* /mnt/common_volume/swarm/grafana/config/
+            
+Переименование файла grafana.yaml в docker-compose.yaml, который используется для запуска контейнеров Docker через Docker Compose.
+
+            sodo mv grafana.yaml docker-compose.yaml
+
+Запуск сервисов, описанных в docker-compose.yaml, в фоновом режиме.
+
+            sudo docker compose up -d
+
+остонавлием докер компос так как он не даст редактировать новые данные
+
+            sudo docker compose stop
+
+Затем нужно будет перейти в раздел config для этого пишем следующее cd grafana_stack_for_docker/config если вы уже находитесь в разделе grafana, то напишете следующее cd config
+
+Открываем файл prometheus.yaml в текстовом редакторе vi с правами суперпользователя
+
+             sudo vi prometheus.yaml
+
+Далее нужно исправить targets: на exporter:9100
+
+Было:
+
+![3](https://github.com/user-attachments/assets/52b416c0-b5c2-4e9d-8c9f-89c8ee1fffc3)
+
+Стало:
+
+![4](https://github.com/user-attachments/assets/2e7553a7-b0a4-43bd-a58f-7f656fef7e10)
+
+Чтобы сохранить нажимаем ESC 
+
+            :wq!
+
+запускаем докер
+
+            cd
+            
+            cd grafana_stack_for_docker/config
+            
+             sudo docker compose up -d
+             
+После всех действий перечисленных выше пишем в поисковую строку вашего браузера "http://localhost:3000"
+
+Пороль: 
+      
+            admin
+            
+Логин: 
+      
+            admin
+
+Код графаны: 3000
+
+Код промитеуса: 9090
+
+
+
+
+
+
+
+
+Переход в каталог, куда был склонирован репозиторий.
+
+            sodo cd grafana_stack_for_docker
+
+
+
+            
+
+
+            
+
+  
+
+
+
+
 Самое важное, по пути: /mnt/common_volume/swarm/grafana/config в файле prometheus.ini через vi нужно добавить вот эти строки, так это нужно будет для дальнейшей работы:
 
       node-exporter: 
@@ -114,23 +215,9 @@
       networks: 
         - default
 
-Запуск сервисов, описанных в docker-compose.yaml, в фоновом режиме.
 
-            sudo docker compose up -d
 
-После всех действий перечисленных выше пишем в поисковую строку вашего браузера "http://localhost:3000"
 
-Пороль: 
-      
-            admin
-            
-Логин: 
-      
-            admin
-
-Код графаны: 3000
-
-Код промитеуса: 9090
 
 
 
